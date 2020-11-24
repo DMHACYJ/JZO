@@ -5,12 +5,12 @@
 using namespace std;
 
 
-//±©Á¦Çó½â¡£Ê±¼äO(nlogn)£¬¿Õ¼äO(1)
+//æš´åŠ›æ±‚è§£ã€‚æ—¶é—´O(nlogn)ï¼Œç©ºé—´O(1)
 int test1(int num[], int n) {
 	if (num == nullptr || n <= 0) {
 		return -1;
 	}
-	sort(num, num + n); // Ê±¼äO(nlogn)
+	sort(num, num + n); // æ—¶é—´O(nlogn)
 	for (int i = 0; i < n - 1; i++) { // O(n)
 		if (num[i] == num[i + 1]) {
 			return num[i];
@@ -19,7 +19,7 @@ int test1(int num[], int n) {
 	return -1;
 }
 
-//µ±Êı×éÖĞÊı×Ö¶¼ÔÚ 0 - n - 1 ·¶Î§µÄÊ±ºòÓÃÈçÏÂ¹şÏ£±í½â
+//å½“æ•°ç»„ä¸­æ•°å­—éƒ½åœ¨ 0 - n - 1 èŒƒå›´çš„æ—¶å€™ç”¨å¦‚ä¸‹å“ˆå¸Œè¡¨è§£
 int test2(int num[], int n) {
 	if (num == nullptr || n <= 0) {
 		return -1;
@@ -29,7 +29,7 @@ int test2(int num[], int n) {
 			return -1;
 		}
 	}
-	for (int i = 0; i < n; ++i) {//Ê±¼ä¸´ÔÓ¶ÈO(n)£¬¿Õ¼äO(1)
+	for (int i = 0; i < n; ++i) {//æ—¶é—´å¤æ‚åº¦O(n)ï¼Œç©ºé—´O(1)
 		while (num[i] != i) {
 			if (num[i] == num[num[i]]) {
 				return num[i];
@@ -40,8 +40,8 @@ int test2(int num[], int n) {
 	return -1;
 }
 
-//¼ÓÒªÇó²»¸Ä±äÔ­Êı×é
-//±©Á¦Çó½â
+//åŠ è¦æ±‚ä¸æ”¹å˜åŸæ•°ç»„
+//æš´åŠ›æ±‚è§£ï¼Œæ—¶é—´å¤æ‚åº¦O(n^2)ï¼Œç©ºé—´O(1)ã€‚
 int test3(int num[], int n) {
 	if (num == nullptr || n <= 0) {
 		return -1;
@@ -54,14 +54,14 @@ int test3(int num[], int n) {
 	return -1;
 }
 
-//¿Õ¼ä»»Ê±¼ä
-//¹şÏ£unordered_set£¬²»ÏŞÖÆÊı×Ö´óĞ¡
+//ç©ºé—´æ¢æ—¶é—´
+//å“ˆå¸Œunordered_setï¼Œä¸é™åˆ¶æ•°å­—å¤§å°
 int test4(int num[], int n) {
 	if (num == nullptr || n <= 0) {
 		return -1;
 	}
-	unordered_set<int> us; //¿Õ¼ä¸´ÔÓ¶ÈO(n)
-	for (int i = 0; i < n; ++i) {//Ê±¼ä¸´ÔÓ¶ÈO(n)
+	unordered_set<int> us; //ç©ºé—´å¤æ‚åº¦O(n)
+	for (int i = 0; i < n; ++i) {//æ—¶é—´å¤æ‚åº¦O(n)
 		if (us.find(num[i]) != us.end())
 			return num[i];
 		else us.insert(num[i]);
@@ -69,18 +69,31 @@ int test4(int num[], int n) {
 	return -1;
 }
 
-//¹şÏ££¬²»ÏŞÖÆÊı×Ö´óĞ¡£¬ÓĞĞèÒª¿ÉÊä³öÃ¿¸öÊı×ÖÖØ¸´¶àÉÙ¸ö
+//å“ˆå¸Œï¼Œä¸é™åˆ¶æ•°å­—å¤§å°ï¼Œæœ‰éœ€è¦å¯è¾“å‡ºæ¯ä¸ªæ•°å­—é‡å¤å¤šå°‘ä¸ª
 int test5(int num[], int n) {
 	if (num == nullptr || n <= 0) {
 		return -1;
 	}
-	unordered_map<int, int> um; //¿Õ¼ä¸´ÔÓ¶ÈO(n)
-	for (int i = 0; i < n; ++i) {//Ê±¼ä¸´ÔÓ¶ÈO(n)
+	unordered_map<int, int> um; //ç©ºé—´å¤æ‚åº¦O(n)
+	for (int i = 0; i < n; ++i) {//æ—¶é—´å¤æ‚åº¦O(n)
 		um[num[i]]++;
 		if (um[num[i]] > 1)
 			return num[i];
 	}
 	return -1;
+}
+
+int test6(int num[], int length) {//æ—¶é—´å¤æ‚åº¦O(n)
+	vector<bool> vec(length, false);//ç©ºé—´å¤æ‚åº¦O(n)
+	for (int i = 0; i < length; ++i) {
+		if (!vec[num[i]]) {
+			vec[num[i]] = true;
+		}
+		else {
+			return num[i];
+		}
+	}
+	return false;
 }
 
 int main() {
@@ -90,6 +103,7 @@ int main() {
 	cout << test3(num, sizeof(num) / sizeof(int)) << endl;
 	cout << test4(num, sizeof(num) / sizeof(int)) << endl;
 	cout << test5(num, sizeof(num) / sizeof(int)) << endl;
+	cout << test6(num, sizeof(num) / sizeof(int)) << endl;
 	getchar();
 	return 0;
 }
