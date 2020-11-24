@@ -19,6 +19,30 @@ int test1(int num[], int n) {
 	return -1;
 }
 
+//优化。时间O(nlogn)，空间O(1)
+int test7(int num[], int n) {
+	if (num == nullptr || n <= 0) {
+		return -1;
+	}
+	sort(num, num + n); // 时间O(nlogn)
+	int start = 0;
+	int end = n - 1;
+	while (start <= end) {// + O(logn)
+		int mid = ((start - end) >> 1) + end;
+		if (start == (end - 1) && num[start] == num[end]) {
+			return num[start];
+		}
+		else if (start == (end - 1) && num[start] != num[end]) return -1;
+		if (num[mid] == mid) {
+			start = mid;
+		}
+		else {
+			end = mid;
+		}
+	}
+	return -1;
+}
+
 //当数组中数字都在 0 - n - 1 范围的时候用如下哈希表解
 int test2(int num[], int n) {
 	if (num == nullptr || n <= 0) {
